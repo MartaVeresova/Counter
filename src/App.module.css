@@ -1,0 +1,58 @@
+.container {
+    width: 250px;
+    border: 2px solid black;
+    border-radius: 7px;
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.number {
+    height: 100px;
+    border: 2px solid black;
+    border-radius: 7px;
+    font-size: 40px;
+    color: darkslateblue;
+    background-color: powderblue;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    border: 2px solid black;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    background-color: powderblue;
+    border: 2px solid white;
+    border-radius: 7px;
+    width: 70px;
+    height: 30px;
+    margin: 15px 0;
+    font: bold 120% "Fira Code", sans-serif;
+}
+
+.button:first-child {
+    margin-right: 10px;
+}
+
+.button:last-child {
+    margin-left: 10px;
+}
+
+.maxNumber {
+    font-size: 60px;
+    border-color: red;
+    color: red;
+    font-weight: bolder;
+    background-color: powderblue;
+}
