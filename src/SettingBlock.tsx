@@ -45,12 +45,9 @@ export function SettingBlock(props: SettingBlockType) {
         if (valueStart >= props.maxValue) {
             props.setErrorStart(true)
             props.setErrorMax(true)
-        } else if (valueStart < 0) {
-            props.setErrorStart(true)
-            props.setErrorMax(false)
         } else if (valueStart < 0 && props.maxValue === 0) {
             props.setErrorStart(true)
-            props.setErrorMax(false)
+            props.setErrorMax(true)
         } else {
             props.setErrorStart(false)
             props.setErrorMax(false)
