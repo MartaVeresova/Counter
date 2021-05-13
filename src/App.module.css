@@ -1,7 +1,7 @@
 .app {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -69,8 +69,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80px;
+    width: 100px;
     margin: 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 13px;
 }
 
 .error {
@@ -88,4 +91,14 @@
 
 .editMode {
     font-size: 20px;
+}
+
+.spanAndInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 250px;
+    flex-wrap: nowrap;
+    align-content: stretch;
 }

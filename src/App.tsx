@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Counter, SettingBlock} from './Counter';
+import {Counter} from './Counter';
 import s from './App.module.css'
+import {SettingBlock} from './SettingBlock';
 
 function App() {
     const [number, setNumber] = useState(0)
@@ -41,31 +42,33 @@ function App() {
 
     return (
         <div className={s.app}>
-            <SettingBlock
-                startValue={startValue}
-                setStartValue={setStartValue}
-                number={number}
-                setNumber={setNumber}
-                maxValue={maxValue}
-                setMaxValue={setMaxValue}
-                errorMax={errorMax}
-                setErrorMax={setErrorMax}
-                errorStart={errorStart}
-                setErrorStart={setErrorStart}
-                editMode={editMode}
-                setEditMode={setEditMode}
-            />
-            <Counter
-                inc={inc}
-                reset={reset}
-                number={number}
-                startValue={startValue}
-                maxValue={maxValue}
-                errorMax={errorMax}
-                errorStart={errorStart}
-                editMode={editMode}
-                setEditMode={setEditMode}
-            />
+            <div>
+                <SettingBlock
+                    setNumber={setNumber}
+                    startValue={startValue}
+                    setStartValue={setStartValue}
+                    maxValue={maxValue}
+                    setMaxValue={setMaxValue}
+                    errorMax={errorMax}
+                    setErrorMax={setErrorMax}
+                    errorStart={errorStart}
+                    setErrorStart={setErrorStart}
+                    editMode={editMode}
+                    setEditMode={setEditMode}
+                />
+            </div>
+            <div>
+                <Counter
+                    inc={inc}
+                    reset={reset}
+                    number={number}
+                    maxValue={maxValue}
+                    startValue={startValue}
+                    errorMax={errorMax}
+                    errorStart={errorStart}
+                    editMode={editMode}
+                />
+            </div>
         </div>
     );
 }
