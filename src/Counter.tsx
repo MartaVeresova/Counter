@@ -14,6 +14,8 @@ export type CounterType = {
 }
 
 export function Counter(props: CounterType) {
+    const disabledInc = props.number === props.maxValue || props.editMode || props.startValue < 0 || props.maxValue < 0 || props.maxValue < props.startValue
+    const disabledReset = !props.number || props.errorStart || props.errorMax || props.startValue < 0 || props.maxValue < 0 || props.maxValue < props.startValue
 
     return (
         <div className={s.container}>
@@ -33,12 +35,12 @@ export function Counter(props: CounterType) {
             <div className={s.buttons}>
                 <Button
                     name={'inc'}
-                    disabled={props.number === props.maxValue || props.editMode}
+                    disabled={disabledInc}
                     onClickButton={props.inc}
                 />
                 <Button
                     name={'reset'}
-                    disabled={!props.number || props.errorStart || props.errorMax}
+                    disabled={disabledReset}
                     onClickButton={props.reset}
                 />
             </div>
