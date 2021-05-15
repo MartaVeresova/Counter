@@ -7,8 +7,7 @@ function App() {
     const [number, setNumber] = useState(0)
     const [startValue, setStartValue] = useState(0)
     const [maxValue, setMaxValue] = useState(0)
-    const [errorMax, setErrorMax] = useState(false)
-    const [errorStart, setErrorStart] = useState(false)
+    const [error, setError] = useState(false)
     const [editMode, setEditMode] = useState(false)
 
     useEffect(() => {
@@ -29,60 +28,32 @@ function App() {
     useEffect(() => {
         localStorage.setItem('maxValue', JSON.stringify(maxValue))
         localStorage.setItem('startValue', JSON.stringify(startValue))
-        setErrorOfMaxValue()
+        setErrorOfValue()
     }, [maxValue, startValue])
 
 
     const inc = () => setNumber(number + 1)
     const reset = () => setNumber(startValue)
 
-
-    const setErrorOfMaxValue = () => {
+    // early return
+    const setErrorOfValue = () => {
         if (maxValue <= startValue) {
-            setErrorMax(true)
-            setErrorStart(true)
+            setError(true)
+
             return
         }
         if (maxValue < 0 || startValue < 0) {
-            setErrorMax(true)
-            setErrorStart(false)
+            setError(true)
+
             return
         }
         if (maxValue < 0 && startValue === 0) {
-            setErrorMax(true)
-            setErrorStart(false)
+            setError(true)
+
             return
         }
-        setErrorMax(false)
-        setErrorStart(false)
+        setError(false)
     }
-
-    /*const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setNumber(e.currentTarget.valueAsNumber)
-    }
-    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setNumber(e.currentTarget.valueAsNumber)
-    }*/
-
-    /*const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const valueStart = e.currentTarget.valueAsNumber
-        setEditMode(true)
-        setStartValue(valueStart)
-        if (valueStart >= maxValue) {
-            setErrorMax(true)
-            setErrorStart(true)
-        } else if (valueStart < 0 && maxValue === 0) {
-            setErrorMax(true)
-            setErrorStart(true)
-        } else if (valueStart < 0) {
-            setErrorStart(true)
-            setErrorMax(false)
-        } else {
-            setErrorMax(false)
-            setErrorStart(false)
-        }
-    }*/
-
 
     return (
         <div className={s.app}>
@@ -93,14 +64,10 @@ function App() {
                     setStartValue={setStartValue}
                     maxValue={maxValue}
                     setMaxValue={setMaxValue}
-                    errorMax={errorMax}
-                    setErrorMax={setErrorMax}
-                    errorStart={errorStart}
-                    setErrorStart={setErrorStart}
+                    error={error}
+                    setError={setError}
                     editMode={editMode}
                     setEditMode={setEditMode}
-                    // onChangeStartValue={onChangeStartValue}
-                    // onChangeMaxValue={onChangeMaxValue}
                 />
             </div>
             <div>
@@ -110,8 +77,7 @@ function App() {
                     number={number}
                     maxValue={maxValue}
                     startValue={startValue}
-                    errorMax={errorMax}
-                    errorStart={errorStart}
+                    error={error}
                     editMode={editMode}
                 />
             </div>

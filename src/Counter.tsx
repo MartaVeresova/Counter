@@ -8,8 +8,7 @@ export type CounterType = {
     number: number
     maxValue: number
     startValue: number
-    errorMax: boolean
-    errorStart: boolean
+    error: boolean
     editMode: boolean
 }
 
@@ -32,54 +31,39 @@ export function Counter(props: CounterType) {
     //         || maxValue < 0
     //         || maxValue <= startValue
     //
-
-    // const 3 =                     props.editMode && !props.errorMax && !props.errorStart
-
+    // const 3 =  props.editMode && !props.errorMax && !props.errorStart
     //     return {disabledInc, disabledReset, 3};
     // }
-    // //
-    //
-    //
-    //
-    const disabledInc =
-        props.number === props.maxValue
-        || props.editMode
-        || props.startValue < 0
-        || props.maxValue < 0
-        || props.maxValue < props.startValue
-
-    const disabledReset =
-        !props.number
-        || props.errorStart
-        || props.errorMax
-        || props.startValue < 0
-        || props.maxValue < 0
-        || props.maxValue <= props.startValue
-
     // const {disabledinc, disabledReset} = testFunc(props.editMode, props.startValue, ............)
 
-    const enterValue = props.editMode && !props.errorMax && !props.errorStart
-    const errorValue = props.errorMax || props.errorStart || props.maxValue <= props.startValue
-    const numValue = !props.editMode && !props.errorMax && !props.errorStart
+    const enterValue = props.editMode && !props.error
+    const errorValue = props.error || props.maxValue <= props.startValue
+    const numValue = !props.editMode && !props.error
+
     const numValueClassName =
         props.number === props.maxValue
             ? `${s.number} ${s.maxNumber}`
             : `${s.number}`
 
+    const disabledInc =
+        props.number === props.maxValue
+        || props.editMode
+        || props.error
+    const disabledReset =
+        !props.number
+        || props.error
+
     return (
         <div className={s.container}>
-            <span>
-                {
-                    enterValue
-                        ? <span className={`${s.number} ${s.editMode}`}>enter values and press set</span>
-                        : errorValue
-                        ? <span className={`${s.number} ${s.error}`}>Incorrect value!</span>
-                        : numValue
-                            ? <span className={numValueClassName}>{props.number} </span>
-                            : ''
-                }
-            </span>
-
+            {
+                enterValue
+                    ? <span className={`${s.number} ${s.editMode}`}>enter values and press set</span>
+                    : errorValue
+                    ? <span className={`${s.number} ${s.error}`}>Incorrect value!</span>
+                    : numValue
+                        ? <span className={numValueClassName}>{props.number} </span>
+                        : ''
+            }
             <div className={s.buttons}>
                 <Button
                     name={'inc'}
