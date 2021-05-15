@@ -11,34 +11,78 @@ function App() {
     const [errorStart, setErrorStart] = useState(false)
     const [editMode, setEditMode] = useState(false)
 
-
     useEffect(() => {
-        let maxNewValue = localStorage.getItem('maxValue')
-        let startNewValue = localStorage.getItem('startValue')
+        const maxNewValue = localStorage.getItem('maxValue')
+        const startNewValue = localStorage.getItem('startValue')
+
         if (maxNewValue) {
             setMaxValue(JSON.parse(maxNewValue))
         }
         if (startNewValue) {
             setStartValue(JSON.parse(startNewValue))
             setNumber(JSON.parse(startNewValue))
-        } else {
-            setErrorMax(true)
-            setErrorStart(true)
         }
+
+        return;
     }, [])
 
     useEffect(() => {
         localStorage.setItem('maxValue', JSON.stringify(maxValue))
         localStorage.setItem('startValue', JSON.stringify(startValue))
+        setErrorOfMaxValue()
     }, [maxValue, startValue])
 
 
-    const inc = () => {
-        setNumber(number + 1)
+    const inc = () => setNumber(number + 1)
+    const reset = () => setNumber(startValue)
+
+
+    const setErrorOfMaxValue = () => {
+        if (maxValue <= startValue) {
+            setErrorMax(true)
+            setErrorStart(true)
+            return
+        }
+        if (maxValue < 0 || startValue < 0) {
+            setErrorMax(true)
+            setErrorStart(false)
+            return
+        }
+        if (maxValue < 0 && startValue === 0) {
+            setErrorMax(true)
+            setErrorStart(false)
+            return
+        }
+        setErrorMax(false)
+        setErrorStart(false)
     }
-    const reset = () => {
-        setNumber(startValue)
+
+    /*const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setNumber(e.currentTarget.valueAsNumber)
     }
+    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setNumber(e.currentTarget.valueAsNumber)
+    }*/
+
+    /*const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+        const valueStart = e.currentTarget.valueAsNumber
+        setEditMode(true)
+        setStartValue(valueStart)
+        if (valueStart >= maxValue) {
+            setErrorMax(true)
+            setErrorStart(true)
+        } else if (valueStart < 0 && maxValue === 0) {
+            setErrorMax(true)
+            setErrorStart(true)
+        } else if (valueStart < 0) {
+            setErrorStart(true)
+            setErrorMax(false)
+        } else {
+            setErrorMax(false)
+            setErrorStart(false)
+        }
+    }*/
+
 
     return (
         <div className={s.app}>
@@ -55,6 +99,8 @@ function App() {
                     setErrorStart={setErrorStart}
                     editMode={editMode}
                     setEditMode={setEditMode}
+                    // onChangeStartValue={onChangeStartValue}
+                    // onChangeMaxValue={onChangeMaxValue}
                 />
             </div>
             <div>
@@ -74,5 +120,3 @@ function App() {
 }
 
 export default App;
-
-

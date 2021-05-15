@@ -14,6 +14,33 @@ export type CounterType = {
 }
 
 export function Counter(props: CounterType) {
+
+    // //
+    // const testFunc = (editMode, startValue, ............) {
+    //     const disabledInc =
+    //         props.number === props.maxValue
+    //         || editMode
+    //         || startValue < 0
+    //         || maxValue < 0
+    //         || maxValue < startValue
+    //
+    //     const disabledReset =
+    //         !props.number
+    //         || errorStart
+    //         || errorMax
+    //         || startValue < 0
+    //         || maxValue < 0
+    //         || maxValue <= startValue
+    //
+
+    // const 3 =                     props.editMode && !props.errorMax && !props.errorStart
+
+    //     return {disabledInc, disabledReset, 3};
+    // }
+    // //
+    //
+    //
+    //
     const disabledInc =
         props.number === props.maxValue
         || props.editMode
@@ -29,18 +56,27 @@ export function Counter(props: CounterType) {
         || props.maxValue < 0
         || props.maxValue <= props.startValue
 
+    // const {disabledinc, disabledReset} = testFunc(props.editMode, props.startValue, ............)
+
+    const enterValue = props.editMode && !props.errorMax && !props.errorStart
+    const errorValue = props.errorMax || props.errorStart || props.maxValue <= props.startValue
+    const numValue = !props.editMode && !props.errorMax && !props.errorStart
+    const numValueClassName =
+        props.number === props.maxValue
+            ? `${s.number} ${s.maxNumber}`
+            : `${s.number}`
+
     return (
         <div className={s.container}>
             <span>
                 {
-                    props.editMode && !props.errorMax && !props.errorStart
+                    enterValue
                         ? <span className={`${s.number} ${s.editMode}`}>enter values and press set</span>
-                        : props.errorMax || props.errorStart || props.number < 0 || props.maxValue <= props.startValue
+                        : errorValue
                         ? <span className={`${s.number} ${s.error}`}>Incorrect value!</span>
-                        : !props.editMode && !props.errorMax && !props.errorStart
-                            ? <span
-                                className={props.number === props.maxValue ? `${s.number} ${s.maxNumber}` : `${s.number}`}>{props.number} </span>
-                            : null
+                        : numValue
+                            ? <span className={numValueClassName}>{props.number} </span>
+                            : ''
                 }
             </span>
 

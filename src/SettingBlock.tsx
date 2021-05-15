@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, ChangeEventHandler} from 'react';
 import s from './App.module.css';
 import {Button} from './Button';
 import {Input} from './Input';
@@ -15,48 +15,90 @@ export type SettingBlockType = {
     setErrorStart: (errorStart: boolean) => void
     editMode: boolean
     setEditMode: (editMode: boolean) => void
+    //onChangeMaxValue: ChangeEventHandler<HTMLInputElement>
+    //onChangeStartValue: ChangeEventHandler<HTMLInputElement>
 }
+
 
 export function SettingBlock(props: SettingBlockType) {
 
+    // const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+    //     const valueMax = e.currentTarget.valueAsNumber
+    //
+    //     props.setEditMode(true)
+    //     props.setMaxValue(valueMax)
+    //
+    //     if (valueMax <= props.startValue) {
+    //         props.setErrorMax(true)
+    //         props.setErrorStart(true)
+    //
+    //         return
+    //     }
+    //     if (valueMax < 0) {
+    //         props.setErrorMax(true)
+    //         props.setErrorStart(false)
+    //
+    //         return
+    //     }
+    //     if (valueMax < 0 && props.startValue === 0) {
+    //         props.setErrorMax(true)
+    //         props.setErrorStart(false)
+    //
+    //         return
+    //     }
+    //
+    //     props.setErrorMax(false)
+    //     props.setErrorStart(false)
+    // }
+
+    // early return
+
+    // if (valueMax <= props.startValue) {
+    //     props.setErrorMax(true)
+    //     props.setErrorStart(true)
+    // } else if (valueMax < 0) {
+    //     props.setErrorMax(true)
+    //     props.setErrorStart(false)
+    // } else if (valueMax < 0 && props.startValue === 0) {
+    //     props.setErrorMax(true)
+    //     props.setErrorStart(false)
+    // } else {
+    //     props.setErrorMax(false)
+    //     props.setErrorStart(false)
+    // }
+// }
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const valueMax = e.currentTarget.valueAsNumber
         props.setEditMode(true)
-        props.setMaxValue(valueMax)
-        if (valueMax <= props.startValue) {
-            props.setErrorMax(true)
-            props.setErrorStart(true)
-        } else if (valueMax < 0) {
-            props.setErrorMax(true)
-            props.setErrorStart(false)
-        } else if (valueMax < 0 && props.startValue === 0) {
-            props.setErrorMax(true)
-            props.setErrorStart(false)
-        } else {
-            props.setErrorMax(false)
-            props.setErrorStart(false)
-        }
+        props.setMaxValue(e.currentTarget.valueAsNumber)
     }
 
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const valueStart = e.currentTarget.valueAsNumber
         props.setEditMode(true)
-        props.setStartValue(valueStart)
-        if (valueStart >= props.maxValue) {
-            props.setErrorStart(true)
-            props.setErrorMax(true)
-        } else if (valueStart < 0 && props.maxValue === 0) {
-            props.setErrorStart(true)
-            props.setErrorMax(true)
-        } else {
-            props.setErrorStart(false)
-            props.setErrorMax(false)
-        }
+        props.setStartValue(e.currentTarget.valueAsNumber)
+
     }
+    // const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+    //     const valueStart = e.currentTarget.valueAsNumber
+    //     props.setEditMode(true)
+    //     props.setStartValue(valueStart)
+    //     if (valueStart >= props.maxValue) {
+    //         props.setErrorMax(true)
+    //         props.setErrorStart(true)
+    //     } else if (valueStart < 0 && props.maxValue === 0) {
+    //         props.setErrorMax(true)
+    //         props.setErrorStart(true)
+    //     } else if (valueStart < 0) {
+    //         props.setErrorStart(true)
+    //         props.setErrorMax(false)
+    //     } else {
+    //         props.setErrorMax(false)
+    //         props.setErrorStart(false)
+    //     }
+    // }
 
     const onClickButtonSet = () => {
         props.setNumber(props.startValue)
-        props.setEditMode(!props.editMode)
+        props.setEditMode(false)
     }
 
     return (
@@ -64,7 +106,7 @@ export function SettingBlock(props: SettingBlockType) {
             <div className={s.number}>
                 <div className={s.input}>
                     <Input
-                        error={props.errorMax || props.maxValue <= props.startValue}
+                        error={props.errorMax || props.maxValue <= props.startValue || props.maxValue < 0}
                         value={props.maxValue}
                         onChange={onChangeMaxValue}
                         text={'max value:'}
