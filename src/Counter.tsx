@@ -36,32 +36,34 @@ export function Counter(props: CounterType) {
     // }
     // const {disabledinc, disabledReset} = testFunc(props.editMode, props.startValue, ............)
 
+    //const greeting = props.start
+
     const enterValue = props.editMode && !props.error
     const errorValue = props.error || props.maxValue <= props.startValue
     const numValue = !props.editMode && !props.error
 
     const numValueClassName =
-        props.number === props.maxValue
-            ? `${s.number} ${s.maxNumber}`
-            : `${s.number}`
+        props.number === props.maxValue ? `${s.maxNumber}` : `${s.number}`
 
     const disabledInc =
         props.number === props.maxValue
         || props.editMode
         || props.error
+
     const disabledReset =
         !props.number
         || props.error
+
 
     return (
         <div className={s.container}>
             {
                 enterValue
-                    ? <span className={`${s.number} ${s.editMode}`}>enter values and press set</span>
+                    ? <span className={s.editMode}>enter values and press set</span>
                     : errorValue
-                    ? <span className={`${s.number} ${s.error}`}>Incorrect value!</span>
+                    ? <span className={s.error}>Incorrect value!</span>
                     : numValue
-                        ? <span className={numValueClassName}>{props.number} </span>
+                        ? <span className={numValueClassName}>{props.number}</span>
                         : ''
             }
             <div className={s.buttons}>

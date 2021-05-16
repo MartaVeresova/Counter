@@ -57,11 +57,17 @@
 }
 
 .maxNumber {
+    height: 100px;
+    border: 2px solid red;
+    border-radius: 7px;
     font-size: 60px;
-    border-color: red;
     color: red;
-    font-weight: bolder;
     background-color: powderblue;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .input {
@@ -77,10 +83,18 @@
 }
 
 .error {
+    height: 100px;
     border: 2px solid red;
-    outline: none;
+    border-radius: 7px;
     font-size: 20px;
     color: red;
+    background-color: powderblue;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    outline: none;
 }
 
 .errorInput {
@@ -90,6 +104,19 @@
 }
 
 .editMode {
+    height: 100px;
+    border: 2px solid black;
+    border-radius: 7px;
+    font-size: 20px;
+    color: darkslateblue;
+    background-color: powderblue;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.span {
     font-size: 20px;
 }
 
@@ -102,3 +129,4 @@
     flex-wrap: nowrap;
     align-content: stretch;
 }
+

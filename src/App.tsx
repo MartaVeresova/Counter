@@ -21,8 +21,7 @@ function App() {
             setStartValue(JSON.parse(startNewValue))
             setNumber(JSON.parse(startNewValue))
         }
-
-        return;
+        //return;
     }, [])
 
     useEffect(() => {

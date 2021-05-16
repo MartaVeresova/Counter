@@ -18,7 +18,7 @@ export function Input(props: InputType) {
 
     return (
         <div className={s.spanAndInput}>
-            <span className={s.editMode}>{props.text}</span>
+            <span className={s.span}>{props.text}</span>
             <input
                 className={classNameInput ? `${s.input} ${s.errorInput}` : s.input}
                 type="number"
