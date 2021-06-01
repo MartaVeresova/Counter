@@ -13,6 +13,8 @@ export type SettingBlockType = {
     setError: (error: boolean) => void
     editMode: boolean
     setEditMode: (editMode: boolean) => void
+    start: boolean
+    setStart: (start: boolean) => void
 }
 
 
@@ -21,18 +23,20 @@ export function SettingBlock(props: SettingBlockType) {
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
         props.setEditMode(true)
         props.setMaxValue(e.currentTarget.valueAsNumber)
+        props.setStart(false)
     }
 
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
         props.setEditMode(true)
         props.setStartValue(e.currentTarget.valueAsNumber)
-
+        props.setStart(false)
     }
 
-    const onClickButtonSet = () => {
+    const onClick = () => {
         props.setEditMode(false)
         props.setNumber(props.startValue)
     }
+
 
     return (
         <div className={s.container}>
@@ -44,7 +48,7 @@ export function SettingBlock(props: SettingBlockType) {
                         text={'max value:'}
                         startValue={props.startValue}
                         maxValue={props.maxValue}
-
+                        start={props.start}
                     />
                     <Input
                         value={props.startValue}
@@ -52,6 +56,7 @@ export function SettingBlock(props: SettingBlockType) {
                         text={'start value:'}
                         startValue={props.startValue}
                         maxValue={props.maxValue}
+                        start={props.start}
                     />
                 </div>
             </div>
@@ -60,7 +65,7 @@ export function SettingBlock(props: SettingBlockType) {
                 <Button
                     name={'set'}
                     disabled={props.error}
-                    onClickButton={onClickButtonSet}
+                    onClick={onClick}
                 />
             </div>
         </div>

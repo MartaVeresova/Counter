@@ -9,6 +9,7 @@ function App() {
     const [maxValue, setMaxValue] = useState(0)
     const [error, setError] = useState(false)
     const [editMode, setEditMode] = useState(false)
+    const [start, setStart] = useState(true)
 
     useEffect(() => {
         const maxNewValue = localStorage.getItem('maxValue')
@@ -16,18 +17,25 @@ function App() {
 
         if (maxNewValue) {
             setMaxValue(JSON.parse(maxNewValue))
+            if (JSON.parse(maxNewValue) !== 0) {
+                setStart(false)
+            }
         }
         if (startNewValue) {
             setStartValue(JSON.parse(startNewValue))
             setNumber(JSON.parse(startNewValue))
+            if (JSON.parse(startNewValue) !== 0) {
+                setStart(false)
+            }
         }
-        //return;
     }, [])
 
     useEffect(() => {
         localStorage.setItem('maxValue', JSON.stringify(maxValue))
         localStorage.setItem('startValue', JSON.stringify(startValue))
-        setErrorOfValue()
+        if (!start) {
+            setErrorOfValue()
+        }
     }, [maxValue, startValue])
 
 
@@ -67,6 +75,8 @@ function App() {
                     setError={setError}
                     editMode={editMode}
                     setEditMode={setEditMode}
+                    start={start}
+                    setStart={setStart}
                 />
             </div>
             <div>
@@ -78,6 +88,7 @@ function App() {
                     startValue={startValue}
                     error={error}
                     editMode={editMode}
+                    start={start}
                 />
             </div>
         </div>

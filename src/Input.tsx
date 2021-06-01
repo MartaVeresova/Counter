@@ -7,6 +7,7 @@ export type InputType = {
     text: string
     startValue: number
     maxValue: number
+    start: boolean
 }
 
 export function Input(props: InputType) {
@@ -16,11 +17,12 @@ export function Input(props: InputType) {
         || props.startValue >= props.maxValue
         || props.maxValue === 0
 
+
     return (
         <div className={s.spanAndInput}>
             <span className={s.span}>{props.text}</span>
             <input
-                className={classNameInput ? `${s.input} ${s.errorInput}` : s.input}
+                className={classNameInput && !props.start ? s.errorInput: s.input}
                 type="number"
                 value={props.value}
                 onChange={props.onChange}

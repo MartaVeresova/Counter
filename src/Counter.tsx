@@ -10,34 +10,12 @@ export type CounterType = {
     startValue: number
     error: boolean
     editMode: boolean
+    start: boolean
 }
 
 export function Counter(props: CounterType) {
 
-    // //
-    // const testFunc = (editMode, startValue, ............) {
-    //     const disabledInc =
-    //         props.number === props.maxValue
-    //         || editMode
-    //         || startValue < 0
-    //         || maxValue < 0
-    //         || maxValue < startValue
-    //
-    //     const disabledReset =
-    //         !props.number
-    //         || errorStart
-    //         || errorMax
-    //         || startValue < 0
-    //         || maxValue < 0
-    //         || maxValue <= startValue
-    //
-    // const 3 =  props.editMode && !props.errorMax && !props.errorStart
-    //     return {disabledInc, disabledReset, 3};
-    // }
-    // const {disabledinc, disabledReset} = testFunc(props.editMode, props.startValue, ............)
-
-    //const greeting = props.start
-
+    const startValue = props.start
     const enterValue = props.editMode && !props.error
     const errorValue = props.error || props.maxValue <= props.startValue
     const numValue = !props.editMode && !props.error
@@ -58,24 +36,27 @@ export function Counter(props: CounterType) {
     return (
         <div className={s.container}>
             {
-                enterValue
+                startValue
+                    ? <span className={s.editMode}>HELLO!<br/>
+                        enter values and press 'set'</span>
+                    : enterValue
                     ? <span className={s.editMode}>enter values and press set</span>
                     : errorValue
-                    ? <span className={s.error}>Incorrect value!</span>
-                    : numValue
-                        ? <span className={numValueClassName}>{props.number}</span>
-                        : ''
+                        ? <span className={s.error}>Incorrect value!</span>
+                        : numValue
+                            ? <span className={numValueClassName}>{props.number}</span>
+                            : ''
             }
             <div className={s.buttons}>
                 <Button
                     name={'inc'}
                     disabled={disabledInc}
-                    onClickButton={props.inc}
+                    onClick={props.inc}
                 />
                 <Button
                     name={'reset'}
                     disabled={disabledReset}
-                    onClickButton={props.reset}
+                    onClick={props.reset}
                 />
             </div>
         </div>

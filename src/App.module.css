@@ -98,6 +98,15 @@
 }
 
 .errorInput {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 13px;
     border: 2px solid red;
     outline: none;
     background-color: hotpink;

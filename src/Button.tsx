@@ -4,7 +4,7 @@ import React from 'react';
 export type ButtonType = {
     name: string
     disabled: boolean
-    onClickButton: () => void
+    onClick: () => void
 }
 
 export function Button(props: ButtonType) {
@@ -12,7 +12,7 @@ export function Button(props: ButtonType) {
         <div>
             <button
                 className={s.button}
-                onClick={props.onClickButton}
+                onClick={props.onClick}
                 disabled={props.disabled}
             >
                 {props.name}
