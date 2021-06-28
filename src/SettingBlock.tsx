@@ -1,41 +1,50 @@
-import React, {ChangeEvent, ChangeEventHandler} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import s from './App.module.css';
 import {Button} from './Button';
 import {Input} from './Input';
-
-export type SettingBlockType = {
-    setNumber: (number: number) => void
-    startValue: number
-    setStartValue: (value: number) => void
-    maxValue: number
-    setMaxValue: (value: number) => void
-    error: boolean
-    setError: (error: boolean) => void
-    editMode: boolean
-    setEditMode: (editMode: boolean) => void
-    start: boolean
-    setStart: (start: boolean) => void
-}
+import {useDispatch, useSelector} from 'react-redux';
+import {pressSetAC, setErrorOfValueAC, setMaxValueAC, setMinValueAC} from './bll/counter-reducer';
+import {AppStateType, store} from './bll/store';
 
 
-export function SettingBlock(props: SettingBlockType) {
+export const SettingBlock = React.memo(() => {
 
-    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setEditMode(true)
-        props.setMaxValue(e.currentTarget.valueAsNumber)
-        props.setStart(false)
-    }
+    const minValue = useSelector<AppStateType, number>(state => state.counter.minValue)
+    const maxValue = useSelector<AppStateType, number>(state => state.counter.maxValue)
+    const error = useSelector<AppStateType, boolean>(state => state.counter.error)
+    const editMode = useSelector<AppStateType, boolean>(state => state.counter.editMode)
+    const greeting = useSelector<AppStateType, boolean>(state => state.counter.greeting)
+    const dispatch = useDispatch()
 
-    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setEditMode(true)
-        props.setStartValue(e.currentTarget.valueAsNumber)
-        props.setStart(false)
-    }
 
-    const onClick = () => {
-        props.setEditMode(false)
-        props.setNumber(props.startValue)
-    }
+    const onChangeMaxValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.currentTarget.valueAsNumber
+        const min = store.getState().counter.minValue
+
+        if (value <= min || value <= 0 || min < 0) {
+            dispatch(setMaxValueAC(e.currentTarget.valueAsNumber))
+            dispatch(setErrorOfValueAC())
+        } else {
+            dispatch(setMaxValueAC(e.currentTarget.valueAsNumber))
+        }
+    }, [dispatch])
+
+
+    const onChangeMinValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.currentTarget.valueAsNumber
+        const max = store.getState().counter.maxValue
+
+        if (max <= value || max <= 0 || value < 0) {
+            dispatch(setMinValueAC(e.currentTarget.valueAsNumber))
+            dispatch(setErrorOfValueAC())
+        } else {
+            dispatch(setMinValueAC(e.currentTarget.valueAsNumber))
+        }
+    }, [dispatch])
+
+    const onClick = useCallback(() => {
+        dispatch(pressSetAC())
+    }, [dispatch])
 
 
     return (
@@ -43,20 +52,20 @@ export function SettingBlock(props: SettingBlockType) {
             <div className={s.number}>
                 <div className={s.input}>
                     <Input
-                        value={props.maxValue}
+                        value={maxValue}
                         onChange={onChangeMaxValue}
                         text={'max value:'}
-                        startValue={props.startValue}
-                        maxValue={props.maxValue}
-                        start={props.start}
+                        minValue={minValue}
+                        maxValue={maxValue}
+                        greeting={greeting}
                     />
                     <Input
-                        value={props.startValue}
-                        onChange={onChangeStartValue}
-                        text={'start value:'}
-                        startValue={props.startValue}
-                        maxValue={props.maxValue}
-                        start={props.start}
+                        value={minValue}
+                        onChange={onChangeMinValue}
+                        text={'min value:'}
+                        minValue={minValue}
+                        maxValue={maxValue}
+                        greeting={greeting}
                     />
                 </div>
             </div>
@@ -64,11 +73,11 @@ export function SettingBlock(props: SettingBlockType) {
             <div className={s.buttons}>
                 <Button
                     name={'set'}
-                    disabled={props.error}
+                    disabled={error || !editMode}
                     onClick={onClick}
                 />
             </div>
         </div>
     )
-}
+})
 

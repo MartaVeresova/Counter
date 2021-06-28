@@ -5,28 +5,28 @@ export type InputType = {
     value: number
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     text: string
-    startValue: number
+    minValue: number
     maxValue: number
-    start: boolean
+    greeting: boolean
 }
 
-export function Input(props: InputType) {
+export const Input = React.memo(({value, onChange, text, minValue, maxValue, greeting}: InputType) => {
 
     const classNameInput =
-        props.value < 0
-        || props.startValue >= props.maxValue
-        || props.maxValue === 0
+        value < 0
+        || minValue >= maxValue
+        || maxValue === 0
 
 
     return (
         <div className={s.spanAndInput}>
-            <span className={s.span}>{props.text}</span>
+            <span className={s.span}>{text}</span>
             <input
-                className={classNameInput && !props.start ? s.errorInput: s.input}
+                className={classNameInput && !greeting ? s.errorInput : s.input}
                 type="number"
-                value={props.value}
-                onChange={props.onChange}
+                value={value}
+                onChange={onChange}
             />
         </div>
     )
-}
+})

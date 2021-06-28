@@ -7,16 +7,16 @@ export type ButtonType = {
     onClick: () => void
 }
 
-export function Button(props: ButtonType) {
+export const Button = React.memo(({name, disabled, onClick}: ButtonType) => {
     return (
         <div>
             <button
                 className={s.button}
-                onClick={props.onClick}
-                disabled={props.disabled}
+                onClick={onClick}
+                disabled={disabled}
             >
-                {props.name}
+                {name}
             </button>
         </div>
     )
-}
+})
