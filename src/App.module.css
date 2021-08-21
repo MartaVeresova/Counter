@@ -6,6 +6,12 @@
     margin: 100px;
 }
 
+@media screen and (max-width: 750px) {
+    .app {
+        flex-direction: column;
+    }
+}
+
 .container {
     width: 250px;
     border: 2px solid black;
@@ -126,6 +132,7 @@
     align-items: center;
     margin-bottom: 10px;
 }
+
 .span {
     font-size: 20px;
 }
